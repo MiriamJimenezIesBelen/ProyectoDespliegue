@@ -7,4 +7,8 @@ export interface Empresa {
   ciudad: string;
   tamano: string;
   correoContacto: string;
+
+  password?: string;
+
+  rol?: string;
 }

@@ -1,0 +1,53 @@
+<div class="impacto-page">
+
+  <div class="impacto-card">
+
+    <h2>Registrar impacto ambiental</h2>
+
+    <form (ngSubmit)="guardarImpacto()" class="impacto-form">
+
+      <input type="number"
+             [(ngModel)]="impacto.energia"
+             name="energia"
+             placeholder="Electricidad (kWh)"
+             required>
+
+      <input type="number"
+             [(ngModel)]="impacto.agua"
+             name="agua"
+             placeholder="Agua (L)"
+             required>
+
+      <input type="number"
+             [(ngModel)]="impacto.co2"
+             name="co2"
+             placeholder="CO₂ (kg)"
+             required>
+
+      <input type="number"
+             [(ngModel)]="impacto.residuos"
+             name="residuos"
+             placeholder="Residuos (kg)"
+             required>
+
+      <button type="submit" class="btn-guardar">
+        Guardar datos
+      </button>
+
+    </form>
+
+    <div class="mensaje-exito" *ngIf="mensajeExito">
+      ✅ Datos guardados correctamente
+    </div>
+
+  </div>
+
+  <hr>
+
+  <h3>Gráfico de impacto</h3>
+
+  <canvas id="graficoImpacto"></canvas>
+
+  <button class="btn-volver" routerLink="/dashboard">← Volver</button>
+
+</div>

@@ -1,0 +1,35 @@
+<header class="main-header">
+  <div class="header-content">
+
+    <a class="logo-container" routerLink="/home">
+      <svg xmlns="http://www.w3.org/2000/svg" width="200" height="40" viewBox="0 0 200 40">
+        <circle cx="20" cy="20" r="12" fill="#2e8b57"></circle>
+        <path d="M20 12 C15 18, 15 25, 20 28 C25 25, 25 18, 20 12" fill="white"></path>
+        <text x="40" y="26" font-family="Arial" font-size="18" fill="white" font-weight="bold">ImpactoVisible</text>
+      </svg>
+    </a>
+
+    <div class="nav-menu" *ngIf="isLoggedIn">
+      <a routerLink="/dashboard" class="nav-link">Dashboard</a>
+      <a routerLink="/registro-impacto" class="nav-link">Registrar datos</a>
+      <a routerLink="/simulador-plan" class="nav-link">Plan de acción</a>
+      <a routerLink="/calculadora" class="nav-link">Calculadora</a>
+      <a routerLink="/buscador-proveedores" class="nav-link">Proveedores</a>
+      <a routerLink="/informe-pdf" class="nav-link">Informe PDF</a>
+    </div>
+
+    <div class="nav-links">
+
+      <ng-container *ngIf="!isLoggedIn">
+        <button routerLink="/login" class="nav-btn">Login</button>
+        <button routerLink="/registro-empresa" class="nav-btn register">Nueva Empresa</button>
+      </ng-container>
+
+      <div *ngIf="isLoggedIn" class="user-info">
+        <span class="welcome-text">Hola, <strong>{{ nombreEmpresa }}</strong></span>
+        <button (click)="logout()" class="btn-logout">Cerrar Sesión</button>
+      </div>
+
+    </div>
+  </div>
+</header>

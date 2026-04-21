@@ -1,13 +1,19 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import {RegistroEmpresaComponent} from './components/registro-empresa/registro-empresa';
+import { HeaderComponent } from './components/header/header';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RegistroEmpresaComponent],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    HeaderComponent
+  ],
+  template: `
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+  `
 })
-export class App {
-  protected readonly title = signal('UT4');
-}
+export class AppComponent { }

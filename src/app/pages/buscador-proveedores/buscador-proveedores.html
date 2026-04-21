@@ -1,0 +1,121 @@
+<div class="buscador-page">
+
+  <div class="buscador-header">
+    <h1>Buscador de Proveedores Sostenibles</h1>
+    <p>Encuentra proveedores reales que ayuden a mejorar tu impacto ambiental</p>
+  </div>
+
+  <!-- CARGANDO -->
+  <div class="cargando" *ngIf="cargando">
+    <p>🔍 Buscando proveedores...</p>
+  </div>
+
+  <!-- CONTENIDO -->
+  <ng-container *ngIf="!cargando">
+
+    <!-- FILTROS -->
+    <div class="filtros-card">
+      <div class="filtros-grid">
+
+        <div class="filtro-group">
+          <label>Buscar por nombre</label>
+          <input
+            type="text"
+            [(ngModel)]="textoBusqueda"
+            (input)="filtrar()"
+            placeholder="Ej: Siemens, Repsol...">
+        </div>
+
+        <div class="filtro-group">
+          <label>Tipo</label>
+          <select [(ngModel)]="filtroTipo" (change)="filtrar()">
+            <option value="">Todos</option>
+            <option value="energia">Energía renovable</option>
+            <option value="materiales">Materiales reciclados</option>
+            <option value="transporte">Transporte eficiente</option>
+            <option value="residuos">Gestión de residuos</option>
+            <option value="agua">Gestión del agua</option>
+          </select>
+        </div>
+
+        <div class="filtro-group">
+          <label>Sector</label>
+          <select [(ngModel)]="filtroSector" (change)="filtrar()">
+            <option value="">Todos</option>
+            <option value="manufactura">Manufactura</option>
+            <option value="alimentacion">Alimentación</option>
+            <option value="textil">Textil</option>
+            <option value="construccion">Construcción</option>
+            <option value="logistica">Logística</option>
+          </select>
+        </div>
+
+        <div class="filtro-group">
+          <label>Ubicación</label>
+          <select [(ngModel)]="filtroUbicacion" (change)="filtrar()">
+            <option value="">Todas</option>
+            <option value="españa">España</option>
+            <option value="europa">Europa</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button class="btn-limpiar" (click)="limpiarFiltros()">
+        Limpiar filtros
+      </button>
+    </div>
+
+    <!-- INFO -->
+    <div class="resultados-info">
+      <span>{{ proveedoresFiltrados.length }} proveedores encontrados</span>
+    </div>
+
+    <!-- RESULTADOS -->
+    <div class="proveedores-grid" *ngIf="proveedoresFiltrados.length > 0">
+
+      <div class="proveedor-card" *ngFor="let p of proveedoresFiltrados; trackBy: trackByNombre">
+
+        <div class="proveedor-header">
+          <div class="proveedor-icono">{{ p.icono }}</div>
+          <div>
+            <h3>{{ p.nombre }}</h3>
+            <span class="proveedor-ubicacion">📍 {{ p.ubicacion }}</span>
+          </div>
+        </div>
+
+        <p class="proveedor-descripcion">{{ p.descripcion }}</p>
+
+        <div class="proveedor-sostenible">
+          <span class="sostenible-titulo">¿Por qué es sostenible?</span>
+          <p>{{ p.razonSostenible }}</p>
+        </div>
+
+        <div class="proveedor-tags">
+          <span class="tag" *ngFor="let tag of p.tags">{{ tag }}</span>
+        </div>
+
+        <div class="proveedor-footer">
+          <span class="proveedor-tipo tipo-{{ p.tipo }}">{{ p.tipoLabel }}</span>
+          <button class="btn-web" *ngIf="p.sitioWeb" (click)="abrirWeb(p.sitioWeb)">
+            🌐 Visitar web
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SIN RESULTADOS -->
+    <div class="sin-resultados" *ngIf="proveedoresFiltrados.length === 0">
+      <p>🔍 No hay proveedores con esos filtros.</p>
+    </div>
+
+    <!-- DEBUG (puedes quitar luego) -->
+    <p>DEBUG: {{ proveedoresFiltrados.length }}</p>
+
+    <button class="btn-volver" routerLink="/dashboard">← Volver</button>
+
+  </ng-container>
+
+</div>

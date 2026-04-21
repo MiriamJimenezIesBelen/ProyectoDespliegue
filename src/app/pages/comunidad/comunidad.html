@@ -1,0 +1,49 @@
+<div class="dashboard-page">
+
+  <h1>🌍 Comunidad Sostenible</h1>
+
+  <!-- CREAR POST -->
+  <div class="crear-post">
+    <textarea [(ngModel)]="nuevoPost"
+              placeholder="Comparte una práctica sostenible..."></textarea>
+
+    <button (click)="publicar()">Publicar</button>
+  </div>
+
+  <!-- FEED -->
+  <div class="feed">
+
+    <div *ngFor="let post of posts; let i = index" class="post">
+
+      <div class="post-header">
+        <strong>{{ post.autor }}</strong>
+        <span>{{ post.fecha | date:'short' }}</span>
+      </div>
+
+      <p>{{ post.texto }}</p>
+
+      <!-- LIKE -->
+      <button (click)="darLike(post)">
+        👍 {{ post.likes }}
+      </button>
+
+      <!-- COMENTARIOS -->
+      <div class="comentarios">
+
+        <div *ngFor="let c of post.comentarios" class="comentario">
+          <b>{{ c.autor }}</b>: {{ c.texto }}
+        </div>
+
+        <input #comentarioInput placeholder="Responder..." />
+
+        <button (click)="comentar(post, comentarioInput.value); comentarioInput.value=''">
+          Responder
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
