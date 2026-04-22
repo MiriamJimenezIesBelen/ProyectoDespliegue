@@ -1,0 +1,30 @@
+<div class="login-page">
+
+  <div class="login-card">
+
+    <h2>Acceso Empresa</h2>
+
+    <p class="subtitle">
+      Accede a tu panel de impacto sostenible
+    </p>
+
+    <input
+      type="email"
+      [(ngModel)]="correo"
+      placeholder="Correo empresarial">
+
+    <input
+      type="password"
+      [(ngModel)]="password"
+      placeholder="Contraseña">
+
+    <button class="login-btn" (click)="login()">Iniciar sesión</button>
+
+    <p class="error" *ngIf="error">Credenciales incorrectas</p>
+
+
+    <button class="back-btn" routerLink="/home">← Volver</button>
+
+  </div>
+
+</div>

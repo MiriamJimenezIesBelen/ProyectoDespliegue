@@ -1,0 +1,153 @@
+<div class="dashboard-page">
+
+  <!-- Bienvenida -->
+  <div class="dashboard-header">
+    <div class="header-left">
+      <h1>Panel de Impacto</h1>
+      <p class="subtitle">Bienvenido, <strong>{{ nombreEmpresa }}</strong> · {{ sectorEmpresa }}</p>
+    </div>
+    <div class="header-right">
+      <button routerLink="/registro-impacto" class="btn-primary">+ Registrar datos</button>
+    </div>
+  </div>
+
+  <!-- SIN DATOS -->
+  <div class="empty-state" *ngIf="sinDatos">
+    <div class="empty-icon">🌱</div>
+    <h2>¡Empieza tu camino sostenible!</h2>
+    <p>Aún no tienes datos registrados. Te sugerimos comenzar por:</p>
+    <div class="sugerencias-grid">
+      <div class="sugerencia-card">
+        <span class="sug-icon">⚡</span>
+        <p>Registra tu consumo de electricidad del mes</p>
+        <button routerLink="/registro-impacto" class="btn-sug">Empezar</button>
+      </div>
+      <div class="sugerencia-card">
+        <span class="sug-icon">💧</span>
+        <p>Anota el agua utilizada en tu producción</p>
+        <button routerLink="/registro-impacto" class="btn-sug">Empezar</button>
+      </div>
+      <div class="sugerencia-card">
+        <span class="sug-icon">♻️</span>
+        <p>Define un objetivo de reducción de residuos</p>
+        <button routerLink="/registro-impacto" class="btn-sug">Empezar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CON DATOS -->
+  <div *ngIf="!sinDatos">
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi-card energia">
+        <div class="kpi-icon">⚡</div>
+        <div class="kpi-info">
+          <span class="kpi-label">Energía total</span>
+          <span class="kpi-value">{{ totalEnergia }} <small>kWh</small></span>
+        </div>
+        <div class="kpi-badge" [ngClass]="badgeEnergia">{{ textoEnergia }}</div>
+      </div>
+      <div class="kpi-card agua">
+        <div class="kpi-icon">💧</div>
+        <div class="kpi-info">
+          <span class="kpi-label">Agua total</span>
+          <span class="kpi-value">{{ totalAgua }} <small>L</small></span>
+        </div>
+        <div class="kpi-badge" [ngClass]="badgeAgua">{{ textoAgua }}</div>
+      </div>
+      <div class="kpi-card co2">
+        <div class="kpi-icon">🌫️</div>
+        <div class="kpi-info">
+          <span class="kpi-label">CO₂ emitido</span>
+          <span class="kpi-value">{{ totalCo2 }} <small>kg</small></span>
+        </div>
+        <div class="kpi-badge" [ngClass]="badgeCo2">{{ textoCo2 }}</div>
+      </div>
+      <div class="kpi-card residuos">
+        <div class="kpi-icon">🗑️</div>
+        <div class="kpi-info">
+          <span class="kpi-label">Residuos</span>
+          <span class="kpi-value">{{ totalResiduos }} <small>kg</small></span>
+        </div>
+        <div class="kpi-badge" [ngClass]="badgeResiduos">{{ textoResiduos }}</div>
+      </div>
+    </div>
+
+    <!-- Índice sostenibilidad -->
+    <div class="indice-card">
+      <h3>Índice de Sostenibilidad General</h3>
+      <div class="indice-barra">
+        <div class="barra-fill" [style.width]="indicePorcentaje + '%'" [ngClass]="indiceClase"></div>
+      </div>
+      <p class="indice-texto">{{ indiceMensaje }}</p>
+    </div>
+
+
+    <div class="insights-box" *ngIf="insights.length">
+      <h3>🔍 Insights automáticos</h3>
+
+      <div *ngFor="let i of insights" class="insight-item">
+        {{ i }}
+      </div>
+    </div>
+
+
+    <!-- Gráficos -->
+    <div class="graficos-grid">
+      <div class="grafico-card">
+        <h3>Evolución de consumos</h3>
+        <canvas #graficoLineas></canvas>
+      </div>
+      <div class="grafico-card">
+        <h3>Distribución por tipo</h3>
+        <canvas #graficoDona></canvas>
+      </div>
+    </div>
+
+    <!-- Historial -->
+    <div class="historial-card">
+      <h3>Historial de registros</h3>
+      <table class="tabla-historial">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>⚡ Energía (kWh)</th>
+          <th>💧 Agua (L)</th>
+          <th>🌫️ CO₂ (kg)</th>
+          <th>🗑️ Residuos (kg)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let imp of impactos; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ imp.energia }}</td>
+          <td>{{ imp.agua }}</td>
+          <td>{{ imp.co2 }}</td>
+          <td>{{ imp.residuos }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Acciones rápidas -->
+    <div class="acciones-rapidas" style="margin-top: 30px; margin-bottom: 40px;">
+      <button routerLink="/simulador-plan" class="accion-btn">🗺 Plan de acción</button>
+      <button routerLink="/calculadora" class="accion-btn">📊 Calculadora de eficiencia</button>
+      <button routerLink="/informe-pdf" class="accion-btn">📄 Generar informe PDF</button>
+    </div>
+
+    <div class="indice-card">
+      <h3>Gamificación</h3>
+
+      <p><strong>Puntos:</strong> {{ puntos }}</p>
+
+      <div>
+    <span *ngFor="let m of medallas" style="margin-right:10px;">
+      {{ m }}
+    </span>
+      </div>
+    </div>
+
+  </div>
+</div>

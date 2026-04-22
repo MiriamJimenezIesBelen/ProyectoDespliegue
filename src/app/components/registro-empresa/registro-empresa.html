@@ -1,0 +1,61 @@
+<div class="empresa-page">
+
+  <div class="empresa-card">
+
+    <h2>Registrar Empresa</h2>
+
+    <form (ngSubmit)="onSubmit()" class="registro-form">
+
+      <input type="text"
+             [(ngModel)]="nuevaEmpresa.nombre"
+             name="nombre"
+             placeholder="Nombre de la empresa"
+             required>
+
+      <input type="text"
+             [(ngModel)]="nuevaEmpresa.numeroRegistro"
+             name="nReg"
+             placeholder="Número de registro"
+             required>
+
+      <input type="text"
+             [(ngModel)]="nuevaEmpresa.sector"
+             name="sector"
+             placeholder="Sector">
+
+      <input type="text"
+             [(ngModel)]="nuevaEmpresa.pais"
+             name="pais"
+             placeholder="País">
+
+
+      <select [(ngModel)]="nuevaEmpresa.tamano" name="tamano">
+        <option value="pequena">Pequeña</option>
+        <option value="mediana">Mediana</option>
+        <option value="grande">Grande</option>
+      </select>
+
+      <input type="email"
+             [(ngModel)]="nuevaEmpresa.correoContacto"
+             name="email"
+             placeholder="Correo contacto">
+
+      <input type="password"
+             [(ngModel)]="nuevaEmpresa.password"
+             name="password"
+             placeholder="Contraseña"
+             required>
+
+      <button type="submit" class="btn-crear">
+        Crear Empresa
+      </button>
+
+    </form>
+
+  </div>
+
+  <button class="btn-volver" routerLink="/dashboard">← Volver</button>
+
+
+
+</div>

@@ -1,0 +1,89 @@
+
+<div class="calc-page">
+
+  <div class="calc-header">
+    <h1>Calculadora de Eficiencia</h1>
+    <p>Introduce tus unidades producidas y calcula la eficiencia por unidad</p>
+  </div>
+
+  <!-- Formulario -->
+  <div class="calc-form-card">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Unidades producidas este mes</label>
+        <input type="number" [(ngModel)]="unidades" name="unidades" placeholder="Ej: 5000" min="1">
+      </div>
+      <div class="form-group">
+        <label>Mes de referencia</label>
+        <input type="month" [(ngModel)]="mes" name="mes">
+      </div>
+    </div>
+    <button class="btn-calcular" (click)="calcular()" [disabled]="!unidades || unidades <= 0">
+      Calcular eficiencia
+    </button>
+  </div>
+
+  <!-- Sin datos de impacto -->
+  <div class="aviso" *ngIf="sinDatos">
+    <span>⚠️</span>
+    <p>No tienes datos de impacto registrados. <a routerLink="/registro-impacto">Registra tus consumos primero.</a></p>
+  </div>
+
+  <!-- Resultados -->
+  <div class="resultados" *ngIf="calculado && !sinDatos">
+
+    <h2>Resultados por unidad producida</h2>
+
+    <div class="indicadores-grid">
+      <div class="indicador-card">
+        <div class="ind-icono">⚡</div>
+        <div class="ind-info">
+          <span class="ind-label">Energía por unidad</span>
+          <span class="ind-valor">{{ eficienciaEnergia | number:'1.2-2' }} <small>kWh/ud</small></span>
+        </div>
+        <div class="semaforo" [ngClass]="semEnergia">{{ textoSemEnergia }}</div>
+      </div>
+      <div class="indicador-card">
+        <div class="ind-icono">💧</div>
+        <div class="ind-info">
+          <span class="ind-label">Agua por unidad</span>
+          <span class="ind-valor">{{ eficienciaAgua | number:'1.2-2' }} <small>L/ud</small></span>
+        </div>
+        <div class="semaforo" [ngClass]="semAgua">{{ textoSemAgua }}</div>
+      </div>
+      <div class="indicador-card">
+        <div class="ind-icono">🌫️</div>
+        <div class="ind-info">
+          <span class="ind-label">CO₂ por unidad</span>
+          <span class="ind-valor">{{ eficienciaCo2 | number:'1.2-2' }} <small>kg/ud</small></span>
+        </div>
+        <div class="semaforo" [ngClass]="semCo2">{{ textoSemCo2 }}</div>
+      </div>
+      <div class="indicador-card">
+        <div class="ind-icono">🗑️</div>
+        <div class="ind-info">
+          <span class="ind-label">Residuos por unidad</span>
+          <span class="ind-valor">{{ eficienciaResiduos | number:'1.2-2' }} <small>kg/ud</small></span>
+        </div>
+        <div class="semaforo" [ngClass]="semResiduos">{{ textoSemResiduos }}</div>
+      </div>
+    </div>
+
+    <!-- Gráfico evolución -->
+    <div class="grafico-card">
+      <h3>Comparación con registros anteriores</h3>
+      <canvas id="graficoEficiencia"></canvas>
+    </div>
+
+    <!-- Conclusión -->
+    <div class="conclusion-card" [ngClass]="'conclusion-' + nivelGeneral">
+      <h3>{{ mensajeGeneral }}</h3>
+      <p>{{ descripcionGeneral }}</p>
+    </div>
+
+  </div>
+
+  <button class="btn-volver" routerLink="/dashboard">← Volver</button>
+
+
+</div>

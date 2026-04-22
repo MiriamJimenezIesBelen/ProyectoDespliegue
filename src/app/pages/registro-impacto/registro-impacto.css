@@ -1,0 +1,81 @@
+.impacto-page{
+  margin-top:40px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.impacto-card{
+  width:320px;
+  padding:15px;
+  border:1px solid #ccc;
+}
+
+.impacto-card h2{
+  text-align:center;
+}
+
+.impacto-form{
+  display:flex;
+  flex-direction:column;
+}
+
+.impacto-form input{
+  margin-bottom:10px;
+  padding:6px;
+}
+
+.btn-guardar{
+  padding:6px;
+  background:#2e8b57;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+
+.lista-impactos{
+  margin-top:30px;
+  width:500px;
+}
+
+table{
+  width:100%;
+}
+
+th{
+  background:#eee;
+}
+
+th, td{
+  border:1px solid #ccc;
+  padding:6px;
+  text-align:center;
+}
+.btn-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1.5px solid #2e8b57;
+  color: #2e8b57;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin: 20px 0 0 20px;
+  transition: all 0.2s;
+}
+.btn-volver:hover {
+  background: #f0faf5;
+}
+
+.mensaje-exito {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
