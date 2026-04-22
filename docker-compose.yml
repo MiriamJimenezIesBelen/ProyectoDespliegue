@@ -1,32 +1,25 @@
-version: '3.8'
-services:
-  # 1. La Base de Datos
-  db:
-    image: mysql:8.0
-    container_name: impacto-db
-    environment:
-      MYSQL_DATABASE: impactovisibledb
-      MYSQL_ROOT_PASSWORD: root
-    networks:
-      - impacto-network
 
-  # 2. El Backend (Spring Boot)
-  backend:
-    build: . # Busca el Dockerfile del que hablamos antes
-    container_name: impacto-backend
+
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: mysql-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/impactovisibledb
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: impactovisibledb
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  spring-app:
+    build: .
+    container_name: spring-app
     depends_on:
-      - db
-    networks:
-      - impacto-network
+      mysql-db:
+        condition: service_healthy
     ports:
       - "8080:8080"
-
-  # 3. El Frontend (Angular) - ¡Opcional pero recomendado!
-  # Si aún no tienes Dockerfile para Angular, puedes desplegarlo aparte,
-  # pero lo ideal es meterlo aquí también.
-networks:
-  impacto-network:
