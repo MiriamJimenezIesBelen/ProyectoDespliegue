@@ -18,34 +18,42 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final JwtService jwtService;
+  private final JwtService jwtService;
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
-            throws ServletException, IOException {
+  @Override
+  protected void doFilterInternal(HttpServletRequest request,
+                                  HttpServletResponse response,
+                                  FilterChain filterChain)
+    throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
+    String path = request.getServletPath();
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
-
-            if (jwtService.isTokenValid(token)) {
-                String correo = jwtService.extractCorreo(token);
-                String rol    = jwtService.extractRol(token);
-
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(
-                                correo,
-                                null,
-                                List.of(new SimpleGrantedAuthority("ROLE_" + rol))
-                        );
-
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            }
-        }
-
-        filterChain.doFilter(request, response);
+    //  EXCLUIR LOGIN DEL JWT FILTER
+    if (path.equals("/api/empresas/login")) {
+      filterChain.doFilter(request, response);
+      return;
     }
+
+    String authHeader = request.getHeader("Authorization");
+
+    if (authHeader != null && authHeader.startsWith("Bearer ")) {
+      String token = authHeader.substring(7);
+
+      if (jwtService.isTokenValid(token)) {
+        String correo = jwtService.extractCorreo(token);
+        String rol = jwtService.extractRol(token);
+
+        UsernamePasswordAuthenticationToken auth =
+          new UsernamePasswordAuthenticationToken(
+            correo,
+            null,
+            List.of(new SimpleGrantedAuthority("ROLE_" + rol))
+          );
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+      }
+    }
+
+    filterChain.doFilter(request, response);
+  }
 }
